@@ -89,10 +89,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        if(fusedLocationProviderClient == null){
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         if(locationManager1!=null){
 

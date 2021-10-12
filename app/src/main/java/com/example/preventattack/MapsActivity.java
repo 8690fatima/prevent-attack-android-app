@@ -181,10 +181,18 @@ public class MapsActivity extends AppCompatActivity {
                                 @Override
                                 public void onLocationResult(@NonNull LocationResult locationResult) {
                                     Location location1 = locationResult.getLastLocation();
+
+                                    while(location1 == null){
+                                        location1 = locationResult.getLastLocation();
+                                    }
+
                                     if(location1!=null) {
                                         logView.append("Co-ordinates:-\n" + "Latitude: " + location1.getLatitude() + "\n" + "Longitude: " + location1.getLongitude() + "\n");
+                                        sendSMS(location1);
+                                    }else{
+                                        logView.append("ERROR Could not find Co-ordinates!");
                                     }
-                                    sendSMS(location1);
+
                                 }
                             };
 
