@@ -179,10 +179,10 @@
                     android:id="@+id/btnRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/txtRegister"
+                    android:layout_below="@id/linearLayout2"
                     android:layout_centerHorizontal="true"
                     android:enabled="false"
-                    android:layout_below="@id/linearLayout2"/>
+                    android:text="@string/txtRegister" />
             </RelativeLayout>
 
         </RelativeLayout>
