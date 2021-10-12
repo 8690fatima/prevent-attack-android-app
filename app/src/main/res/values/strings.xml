@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Prevent\nAttack</string>
+    <string-array name="spinnerPesonalDetails">
+        <item>FIRST NAME</item>
+        <item>LAST NAME</item>
+        <item>EMAIL ADDRESS</item>
+    </string-array>
+    <string name="passHint">*</string>
+    <string name="txtLogin">LOGIN TO ACTIVATE</string>
+    <string name="loginHint">ENTER 4 DIGIT PIN</string>
+    <string name="txtForgotPassword"><u>FORGOT PASSWORD?</u></string>
+    <string name="registerHint">CREATE ACCOUNT</string>
+    <string name="txtRegister">REGISTER</string>
+    <string name="txtPersonalDetails">■ PERSONAL DETAILS</string>
+    <string name="firstNameHint">First Name</string>
+    <string name="lastNameHint">Last Name</string>
+    <string name="emailHint">Email Address</string>
+    <string name="pinHint">Set 4 Digit PIN</string>
+    <string name="rePinHint">Re - Enter PIN</string>
+    <string name="txtEmergencyContactDetails">■ EMERGENCY CONTACT DETAILS</string>
+    <string name="emergencyPhoneHint">Mobile Number</string>
+    <string name="emergencyEmailHint">Email Address</string>
+    <string name="txtFirstName">FIRST NAME</string>
+    <string name="editPersonalDetails">CHANGE PERSONAL DETAILS</string>
+    <string name="txtSettings">SETTINGS</string>
+    <string name="edit_emergency_contact_details">EDIT EMERGENCY CONTACT DETAILS</string>
+    <string name="edit_pin_details">CHANGE PASSWORD</string>
+    <string name="enter_old_pin">ENTER OLD PIN</string>
+    <string name="enter_new_pin">ENTER NEW PIN</string>
+    <string name="hint_enter_new_pin">Enter New Pin</string>
+    <string name="hint_enter_old_pin">Enter old Pin</string>
+    <string name="hint_enter_new_value">ENTER NEW VALUE</string>
+    <string name="re_enter_new_pin">RE-ENTER NEW PIN</string>
+    <string name="save_personal_details">CHANGE DETAILS</string>
+    <string name="enter_new_value">ENTER NEW VALUE</string>
+    <string name="save_pin_details">CHANGE PASSWORD</string>
+    <string name="send_location_through_mail">SEND LOCATION THROUGH MAIL</string>
+    <string name="send_location_through_sms">SEND LOCATION THROUGH SMS</string>
+    <string name="change_application_operation">CHANGE APPLICATION OPERATION</string>
+    <string name="old_value">CURRENT VALUE</string>
+    <string name="edit_detail">EDIT DETAIL</string>
+    <string name="success">LOCATION SENT SUCCESSFULLY</string>
+    <string name="deactivateMessage">CLICK STOP TO DEACTIVATE IN</string>
+    <string name="activateMessage">CLICK PANIC TO ACTIVATE</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="permissionError">INVALID PERMISSIONS\nPlease grant Location and SMS permissions to the app</string>
+    <string name="noLocationAccess">Please enable location access so that we can find your location</string>
+    <string name="message">PREVENT ATTACK! Please find the person immediately at this location \n</string>
+    <string name="account_details">ACCOUNT DETAILS</string>
+    <string name="contacts">GET FROM CONTACTS</string>
+    <string name="edit_emergency_details">CHANGE EMERGENCY DETAILS</string>
+    <string name="save_emergency_contact_details">SAVE EMERGENCY DETAILS</string>
+</resources>

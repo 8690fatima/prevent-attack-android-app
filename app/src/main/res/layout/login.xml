@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="20dp">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/lockImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_lock"/>
+
+        <TextView
+            android:textSize="18sp"
+            android:id="@+id/txtLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/txtLogin"
+            android:textAlignment="center"
+            android:textColor="@color/navyBlue"
+            android:textStyle="bold"
+            android:layout_below="@+id/lockImage"
+            android:layout_marginBottom="50dp"/>
+
+        <TextView
+            android:textSize="18sp"
+            android:id="@+id/loginHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/loginHint"
+            android:textAlignment="center"
+            android:textColor="@color/navyBlue"
+            android:textStyle="bold"
+            android:layout_below="@+id/txtLogin"/>
+
+        <LinearLayout
+            android:id="@+id/passwordLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/loginHint"
+            android:layout_marginTop="50dp">
+
+            <EditText
+                android:textSize="24sp"
+                android:id="@+id/passDigit1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/passHint"
+                android:inputType="numberPassword"
+                android:textStyle="bold"
+                android:maxLength="1"
+                android:textColor="@color/navyBlue"
+                android:backgroundTint="@color/navyBlue"
+                android:padding="15dp"/>
+
+            <EditText
+                android:textSize="24sp"
+                android:id="@+id/passDigit2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/passHint"
+                android:inputType="numberPassword"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLength="1"
+                android:textColor="@color/navyBlue"
+                android:backgroundTint="@color/navyBlue"
+                android:padding="15dp"/>
+
+            <EditText
+                android:textSize="24sp"
+                android:id="@+id/passDigit3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/passHint"
+                android:inputType="numberPassword"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLength="1"
+                android:textColor="@color/navyBlue"
+                android:backgroundTint="@color/navyBlue"
+                android:padding="15dp"/>
+
+            <EditText
+                android:textSize="24sp"
+                android:id="@+id/passDigit4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/passHint"
+                android:inputType="numberPassword"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLength="1"
+                android:textColor="@color/navyBlue"
+                android:backgroundTint="@color/navyBlue"
+                android:padding="15dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
