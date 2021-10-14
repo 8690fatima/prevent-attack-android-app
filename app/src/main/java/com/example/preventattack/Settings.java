@@ -3,6 +3,7 @@ package com.example.preventattack;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,7 +18,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -25,23 +28,27 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.google.android.material.textview.MaterialTextView;
+import java.util.Map;
 
 public class Settings extends AppCompatActivity {
 
-    private EditText detailsEditText, oldPinEditText, newPinEditText, newRePinEditText, emergencyPhone, emergencyEmailID;
+    private EditText detailsEditText, newPinEditText, newRePinEditText, emergencyPhone, emergencyEmailID;
     private Spinner spinner;
-    private MaterialTextView txtOldValue;
     private int spinnerSelection;
+    private RelativeLayout layoutPersonalDetails, layoutChangeEmergencyDetails, layoutPinDetails;
+    private TextView txtEditPersonalDetails, txtEditPinDetails, txtChangeEmergencyDetails;
     Button btnChangeDetails, btnChangePassword, btnGetContact, btnChangeEmergencyDetails;
-    private boolean validOldPin, validNewPin, validNewRePin, validContactPermission;
+    private boolean validNewPin, validNewRePin, validContactPermission;
     private static DatabaseHelper helper;
     private static boolean
             validEmergencyPhone,
             validEmergencyEmailID;
+    private Map securityDetails = null;
+    private Intent intent;
 
     @Override
     protected void onResume() {
@@ -58,7 +65,7 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        validOldPin = validNewPin = validNewRePin = validEmergencyPhone = validEmergencyEmailID  = validContactPermission =  false;
+        validNewPin = validNewRePin = validEmergencyPhone = validEmergencyEmailID  = validContactPermission =  false;
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -71,27 +78,69 @@ public class Settings extends AppCompatActivity {
         initializeSettings();
         settingsMethod();
         getCurrentEmergencyContactDetails();
+
+        intent = getIntent();
+        if(intent.getBooleanExtra("forgotPassword",false)){
+            layoutPinDetails.setVisibility(View.VISIBLE);
+        }else{
+            layoutPinDetails.setVisibility(View.GONE);
+        }
     }
 
     private void initializeSettings(){
         detailsEditText = findViewById(R.id.personalDetailsEditText);
-        oldPinEditText = findViewById(R.id.editTxtOldPin);
         newPinEditText = findViewById(R.id.editTxtNewPin);
         newRePinEditText = findViewById(R.id.editTxtNewRePin);
         btnChangeDetails = findViewById(R.id.btnSavePersonalDetails);
         btnChangeEmergencyDetails = findViewById(R.id.btnChangeEmergencyContactDetails);
         btnChangePassword = findViewById(R.id.btnSavePinDetails);
-        txtOldValue = findViewById(R.id.showOldValueTextView);
         spinner = findViewById(R.id.personalDetailsSpinner);
         emergencyPhone = findViewById(R.id.emergencyPhone);
         emergencyEmailID = findViewById(R.id.emergencyEmail);
         btnGetContact = findViewById(R.id.getContact);
-
-        spinner.requestFocus();
+        layoutPersonalDetails = findViewById(R.id.layoutPersonalDetails);
+        layoutChangeEmergencyDetails = findViewById(R.id.layoutChangeEmergencyDetails);
+        layoutPinDetails = findViewById(R.id.layoutPinDetails);
+        txtChangeEmergencyDetails = findViewById(R.id.txtChangeEmergencyDetails);
+        txtEditPersonalDetails = findViewById(R.id.txtEditPersonalDetails);
+        txtEditPinDetails = findViewById(R.id.txtEditPinDetails);
 
     }
 
     private void settingsMethod(){
+
+        txtEditPersonalDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutPersonalDetails.getVisibility() == View.VISIBLE) {
+                    layoutPersonalDetails.setVisibility(View.GONE);
+                }else{
+                    layoutPersonalDetails.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        txtChangeEmergencyDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutChangeEmergencyDetails.getVisibility() == View.VISIBLE){
+                    layoutChangeEmergencyDetails.setVisibility(View.GONE);
+                }else{
+                    layoutChangeEmergencyDetails.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        txtEditPinDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutPinDetails.getVisibility() == View.VISIBLE){
+                    layoutPinDetails.setVisibility(View.GONE);
+                }else{
+                    layoutPinDetails.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -100,25 +149,23 @@ public class Settings extends AppCompatActivity {
                 switch(position){
                     case 0:
                         spinnerSelection = 0;
-                        txtOldValue.setText(getOldValue(spinnerSelection));
+                        detailsEditText.setHint(getOldValue(spinnerSelection));
                         detailsEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-                        Toast.makeText(getApplicationContext(),"FIRST NAME SELECTED",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         spinnerSelection = 1;
-                        txtOldValue.setText(getOldValue(spinnerSelection));
-                        Toast.makeText(getApplicationContext(),"LAST NAME SELECTED",Toast.LENGTH_SHORT).show();
+                        detailsEditText.setHint(getOldValue(spinnerSelection));
                         detailsEditText.setInputType(InputType.TYPE_CLASS_TEXT);
                         break;
                     case 2:
                         spinnerSelection = 2;
-                        txtOldValue.setText(getOldValue(spinnerSelection));
-                        Toast.makeText(getApplicationContext(),"EMAIL ADDRESS SELECTED",Toast.LENGTH_SHORT).show();
+                        detailsEditText.setHint(getOldValue(spinnerSelection));
                         detailsEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                         break;
                 }
-                detailsEditText.requestFocus();
+                //detailsEditText.requestFocus();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -173,32 +220,32 @@ public class Settings extends AppCompatActivity {
                     case InputType.TYPE_CLASS_TEXT:
                         switch(spinnerSelection){
                             case 0: //change first name
-                                if(helper.changeDetails("first_name",detailsEditText.getText().toString())){
-                                    Toast.makeText(getApplicationContext(),"UPDATE SUCCESSFUL",Toast.LENGTH_SHORT).show();
-                                    txtOldValue.setText(getOldValue(spinnerSelection));
+                                if(helper.changeDetails("first_name",detailsEditText.getText().toString().toLowerCase())){
+                                    Toast.makeText(getApplicationContext(),"✅ UPDATE SUCCESSFUL",Toast.LENGTH_SHORT).show();
+                                    detailsEditText.setHint(getOldValue(spinnerSelection));
                                 }
                                 else{
-                                    Toast.makeText(getApplicationContext(),"ERROR! TRY AGAIN",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),"❌ ERROR! TRY AGAIN",Toast.LENGTH_SHORT).show();
                                 }
                                 break;
                             case 1: //change last name
-                                if(helper.changeDetails("last_name",detailsEditText.getText().toString())){
-                                    Toast.makeText(getApplicationContext(),"UPDATE SUCCESSFUL",Toast.LENGTH_SHORT).show();
-                                    txtOldValue.setText(getOldValue(spinnerSelection));
+                                if(helper.changeDetails("last_name",detailsEditText.getText().toString().toLowerCase())){
+                                    Toast.makeText(getApplicationContext(),"✅ UPDATE SUCCESSFUL",Toast.LENGTH_SHORT).show();
+                                    detailsEditText.setHint(getOldValue(spinnerSelection));
                                 }
                                 else{
-                                    Toast.makeText(getApplicationContext(),"ERROR! TRY AGAIN",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),"❌ ERROR! TRY AGAIN",Toast.LENGTH_SHORT).show();
                                 }
                                 break;
                         }
                         break;
                     case InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS:
-                        if(helper.changeDetails("email_address",detailsEditText.getText().toString())){
-                            Toast.makeText(getApplicationContext(),"UPDATE SUCCESSFUL",Toast.LENGTH_SHORT).show();
-                            txtOldValue.setText(getOldValue(2));
+                        if(helper.changeDetails("email_address",detailsEditText.getText().toString().toLowerCase())){
+                            Toast.makeText(getApplicationContext(),"✅ UPDATE SUCCESSFUL",Toast.LENGTH_SHORT).show();
+                            detailsEditText.setHint(getOldValue(2));
                         }
                         else{
-                            Toast.makeText(getApplicationContext(),"ERROR! TRY AGAIN",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"❌ ERROR! TRY AGAIN",Toast.LENGTH_SHORT).show();
                         }
                 }
                 detailsEditText.getText().clear();
@@ -209,41 +256,14 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(helper.changeEmergencyDetails(emergencyPhone.getText().toString(),emergencyEmailID.getText().toString())){
-                    Toast.makeText(getApplicationContext(),"UPDATE SUCCESSFUL!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"✅ UPDATE SUCCESSFUL!",Toast.LENGTH_SHORT).show();
                     emergencyPhone.setText("");
                     emergencyEmailID.setText("");
                     getCurrentEmergencyContactDetails();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"ERROR:COULD NOT UPDATE!!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"❌ ERROR! TRY AGAIN",Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        oldPinEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 4) {
-                    validOldPin = true;
-                    oldPinEditText.setTextColor(getResources().getColor(R.color.navyBlue));
-                    newPinEditText.requestFocus();
-                } else {
-                    validOldPin = false;
-                    newPinEditText.getText().clear();
-                    newRePinEditText.getText().clear();
-                    oldPinEditText.setTextColor(getResources().getColor(R.color.navyBlue));
-                }
-                checkPinDetails();
             }
         });
 
@@ -260,12 +280,7 @@ public class Settings extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (oldPinEditText.getText().length() != 4) {
-                    newPinEditText.getText().clear();
-                    newRePinEditText.getText().clear();
-                    oldPinEditText.requestFocus();
-                }
-                else if(s.length() == 4){
+                if(s.length() == 4){
                     validNewPin = true;
                     newPinEditText.setTextColor(getResources().getColor(R.color.darkGreen));
                     newRePinEditText.requestFocus();
@@ -292,12 +307,7 @@ public class Settings extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (oldPinEditText.getText().length() != 4) {
-                    newPinEditText.getText().clear();
-                    newRePinEditText.getText().clear();
-                    oldPinEditText.requestFocus();
-                }
-                else if(newPinEditText.getText().length()!=4){
+                if(newPinEditText.getText().length()!=4){
                     newRePinEditText.getText().clear();
                     newPinEditText.requestFocus();
                 }
@@ -315,20 +325,49 @@ public class Settings extends AppCompatActivity {
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(helper.verifyPassword(oldPinEditText.getText().toString())){
-                    if(helper.changePassword(newPinEditText.getText().toString())){
-                        Toast.makeText(getApplicationContext(), "PASSWORD UPDATED", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "ERROR! COULD NOT UPDATE", Toast.LENGTH_SHORT).show();
+
+                if(securityDetails == null){
+                    securityDetails = helper.getSecurityDetails();
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
+                builder.setTitle("Security Check");
+                builder.setMessage(securityDetails.get("securityQ").toString());
+                final View view = getLayoutInflater().inflate(R.layout.forgot_password, null);
+                builder.setView(view);
+
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String response = ((EditText)view.findViewById(R.id.securityAnswer)).getText().toString().toLowerCase();
+
+                        if(securityDetails.get("securityAns").equals(MD5.getHashedPassword(response))){
+                            if(helper.changePassword(newPinEditText.getText().toString())){
+                                Toast.makeText(Settings.this, "PASSWORD UPDATED SUCCESSFULLY!", Toast.LENGTH_SHORT).show();
+
+                                if(intent.getBooleanExtra("forgotPassword",false)){
+                                    finish();
+                                }
+                            }else{
+                                Toast.makeText(Settings.this, "❌ ERROR!", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(Settings.this, "INVALID ANSWER! COULD NOT UPDATE PIN", Toast.LENGTH_SHORT).show();
+                        }
+
+                        newPinEditText.getText().clear();
+                        newRePinEditText.getText().clear();
                     }
-                    validOldPin = validNewPin = validNewRePin = false;
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "INCORRECT PASSWORD! TRY AGAIN", Toast.LENGTH_SHORT).show();
-                }
-                oldPinEditText.getText().clear();
-                newPinEditText.getText().clear();
-                newRePinEditText.getText().clear();
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 
@@ -423,7 +462,7 @@ public class Settings extends AppCompatActivity {
     }
 
     private void checkPinDetails(){
-        if(validOldPin & validNewPin & validNewRePin)
+        if(validNewPin & validNewRePin)
             btnChangePassword.setEnabled(true);
         else
             btnChangePassword.setEnabled(false);
@@ -462,8 +501,6 @@ public class Settings extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == Activity.RESULT_OK){
-                        Toast.makeText(getApplicationContext(),"Contacts Result OK",Toast.LENGTH_SHORT).show();
-
                         Uri uri = result.getData().getData();
                         String[] projection = new String[] { ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME };
                         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);

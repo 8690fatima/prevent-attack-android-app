@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="10dp">
 
     <ScrollView
         android:layout_centerInParent="true"
@@ -17,8 +17,7 @@
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:padding="10dp">
+            android:layout_centerInParent="true">
 
             <RelativeLayout
                 android:id="@+id/relativeLayout2"
@@ -114,7 +113,27 @@
                         android:inputType="numberPassword"
                         android:maxLength="4"
                         android:textStyle="bold"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerSecurityQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="left"
+                        android:theme="@style/spinner_item"
+                        android:backgroundTint="@color/navyBlue"
+                        android:entries="@array/securityQuestions" />
+
+                    <EditText
+                        android:id="@+id/securityAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:hint="@string/securityAnswerHint"
+                        android:inputType="textPersonName"
+                        android:textStyle="bold"/>
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
@@ -183,6 +202,7 @@
                     android:layout_centerHorizontal="true"
                     android:enabled="false"
                     android:text="@string/txtRegister" />
+
             </RelativeLayout>
 
         </RelativeLayout>

@@ -13,8 +13,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -27,7 +29,7 @@ import androidx.core.app.ActivityCompat;
 
 public class Registration extends AppCompatActivity {
 
-    private EditText firstName, lastName, emailID, emergencyPhone, emergencyEmailID, pin, rePin;
+    private EditText firstName, lastName, emailID, emergencyPhone, emergencyEmailID, pin, rePin, securityAnswer;
     private Button btnRegister, btnGetContact;
     private static boolean isSuccess;
     private static DatabaseHelper helper;
@@ -36,8 +38,12 @@ public class Registration extends AppCompatActivity {
             validEmail,
             validEmergencyPhone,
             validEmergencyEmailID,
-            validPin;
+            validPin,
+            validSecurityAnswer,
+            validSecurityQuestion;
     private boolean validContactPermission;
+    private Spinner spinnerSecurityQuestions;
+    private static String securityQ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +84,8 @@ public class Registration extends AppCompatActivity {
         emergencyEmailID = findViewById(R.id.emergencyEmail);
         btnRegister = findViewById(R.id.btnRegister);
         btnGetContact = findViewById(R.id.getContact);
+        securityAnswer = findViewById(R.id.securityAnswer);
+        spinnerSecurityQuestions = findViewById(R.id.spinnerSecurityQuestion);
 
         firstName.requestFocus();
     }
@@ -290,6 +298,74 @@ public class Registration extends AppCompatActivity {
             }
         });
 
+        securityAnswer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().matches("[a-z]+")) {
+                    validSecurityAnswer = true;
+                    checkRegistrationDetails();
+                    securityAnswer.setTextColor(getResources().getColor(R.color.darkGreen));
+                } else {
+                    validSecurityAnswer = false;
+                    checkRegistrationDetails();
+                    securityAnswer.setTextColor(getResources().getColor(R.color.cherryRed));
+                }
+            }
+        });
+
+        spinnerSecurityQuestions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                securityAnswer.getText().clear();
+                switch(position) {
+                    case 0:
+                        validSecurityQuestion = false;
+                        securityAnswer.getText().clear();
+                        securityQ = null;
+                        checkRegistrationDetails();
+                        break;
+                    case 1:
+
+                        validSecurityQuestion = true;
+                        securityQ = getString(R.string.question1);
+                        checkRegistrationDetails();
+                        break;
+                    case 2:
+                        validSecurityQuestion = true;
+                        securityQ = getString(R.string.question2);
+                        checkRegistrationDetails();
+                        break;
+                    case 3:
+                        validSecurityQuestion = true;
+                        securityQ = getString(R.string.question3);
+                        checkRegistrationDetails();
+                        break;
+                    case 4:
+                        validSecurityQuestion = true;
+                        securityQ = getString(R.string.question4);
+                        checkRegistrationDetails();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -307,7 +383,9 @@ public class Registration extends AppCompatActivity {
                                     emailID.getText().toString(),
                                     emergencyPhone.getText().toString(),
                                     emergencyEmailID.getText().toString(),
-                                    MD5.getHashedPassword(pin.getText().toString()));
+                                    MD5.getHashedPassword(pin.getText().toString()),
+                                    securityQ,
+                                    MD5.getHashedPassword(securityAnswer.getText().toString().toLowerCase()));
 
                             isSuccess = helper.registerUser(user);
                             if (isSuccess) {
@@ -352,8 +430,6 @@ public class Registration extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == Activity.RESULT_OK){
-                        Toast.makeText(getApplicationContext(),"Contacts Result OK",Toast.LENGTH_SHORT).show();
-
                         Uri uri = result.getData().getData();
                         String[] projection = new String[] { ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME };
                         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
@@ -407,7 +483,7 @@ public class Registration extends AppCompatActivity {
 
     private synchronized void checkRegistrationDetails(){
 
-        if(validFirstName & validLastName & validEmail & validPin & validEmergencyPhone & validEmergencyEmailID){
+        if(validFirstName & validLastName & validEmail & validPin & validEmergencyPhone & validEmergencyEmailID & validSecurityAnswer & validSecurityQuestion){
             btnRegister.setEnabled(true);
         }else{
             btnRegister.setEnabled(false);

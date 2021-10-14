@@ -29,6 +29,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LONGITUDE = "longitude";
     public static final String COLUMN_LATITUDE = "latitude";
     public static final String COLUMN_ID = "id";
+    public static final String COLUMN_SECURITY_QUESTION = "security_question";
+    public static final String COLUMN_SECURITY_ANSWER = "security_answer";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, "user.db", null, 1);
@@ -47,7 +49,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_EMAIL + " TEXT," +
                 COLUMN_PIN + " TEXT," +
                 COLUMN_EMERGENCY_PHONE + " TEXT," +
-                COLUMN_EMERGENCY_EMAIL + " TEXT)";
+                COLUMN_EMERGENCY_EMAIL + " TEXT," +
+                COLUMN_SECURITY_QUESTION + " TEXT," +
+                COLUMN_SECURITY_ANSWER + " TEXT)";
 
         String createTableLocations = "CREATE TABLE " + USER_LOCATIONS_TABLE + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -147,6 +151,23 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return userDetails;
     }
 
+    public Map getSecurityDetails(){
+        Map<String, String> securityDetails = new HashMap<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String getSecurityDetailsQuery = "SELECT "+COLUMN_SECURITY_QUESTION+","+COLUMN_SECURITY_ANSWER+" FROM "+USER_INFO_TABLE;
+        Cursor cursor = db.rawQuery(getSecurityDetailsQuery,null);
+
+        if(cursor.moveToFirst()){
+            securityDetails.put("securityQ",cursor.getString(0));
+            securityDetails.put("securityAns",cursor.getString(1));
+        }
+        cursor.close();
+        db.close();
+        return securityDetails;
+    }
+
     public boolean didUserRegister(){
         boolean result = false;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -186,6 +207,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         userDetailsCv.put(COLUMN_PIN,user.getHashedPin());
         userDetailsCv.put(COLUMN_EMERGENCY_PHONE,user.getEmergencyPhone());
         userDetailsCv.put(COLUMN_EMERGENCY_EMAIL,user.getEmergencyEmailID());
+        userDetailsCv.put(COLUMN_SECURITY_QUESTION,user.getSecurityQuestion());
+        userDetailsCv.put(COLUMN_SECURITY_ANSWER,user.getSecurityAnswer());
 
         long isSuccess = db.insert(USER_INFO_TABLE,null, userDetailsCv);
 

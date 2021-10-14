@@ -1,20 +1,23 @@
 package com.example.preventattack;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class Login extends AppCompatActivity {
+public class Login extends Activity {
 
     private EditText loginDigit1,loginDigit2,loginDigit3,loginDigit4;
+    private TextView forgotPassword;
     private int[] loginPin = new int[4];
     private int loginPinCount;
     private static DatabaseHelper helper;
+    private String securityAns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class Login extends AppCompatActivity {
         loginDigit2 = findViewById(R.id.passDigit2);
         loginDigit3 = findViewById(R.id.passDigit3);
         loginDigit4 = findViewById(R.id.passDigit4);
+
+        forgotPassword = findViewById(R.id.forgotPassword);
 
         loginDigit1.requestFocus();
     }
@@ -144,6 +149,16 @@ public class Login extends AppCompatActivity {
                     loginPin[3] = Integer.parseInt(s.toString());
                 }
                 checkLoginDetails();
+            }
+        });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent settingsIntent = new Intent();
+                settingsIntent.putExtra("forgotPassword", true);
+                settingsIntent.setClass(Login.this, Settings.class);
+                startActivity(settingsIntent);
             }
         });
     }

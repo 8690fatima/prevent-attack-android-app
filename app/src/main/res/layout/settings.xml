@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp">
 
     <ScrollView
         android:layout_centerHorizontal="true"
@@ -9,18 +11,17 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:padding="20dp">
+            android:layout_gravity="center">
 
             <ImageView
                 android:id="@+id/settingsIcon"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_settings"/>
+                android:src="@drawable/ic_settings" />
 
             <TextView
                 android:id="@+id/txtSettings"
@@ -34,129 +35,66 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/divider1"
+<!--            <TextView-->
+<!--                android:id="@+id/divider1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/txtSettings"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:background="@color/gray"-->
+<!--                android:textSize="0sp" />-->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtEditPersonalDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:textSize="0sp"
-                android:layout_below="@id/txtSettings"
-                android:layout_marginTop="10dp"/>
+                android:layout_below="@+id/txtSettings"
+                android:layout_marginTop="10dp"
+                android:text="@string/editPersonalDetails"
+                android:textColor="@color/navyBlue"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
             <RelativeLayout
-                android:layout_marginTop="10dp"
                 android:id="@+id/layoutPersonalDetails"
+                android:layout_below="@+id/txtEditPersonalDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_below="@+id/divider1"
-                android:elevation="8dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:textSize="18sp"
-                    android:id="@+id/txtEditPersonalDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/editPersonalDetails"
-                    android:textAlignment="center"
-                    android:textColor="@color/navyBlue"
-                    android:textStyle="bold" />
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="100"
-                    android:layout_below="@+id/txtEditPersonalDetails">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_weight="40"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/edit_detail"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:ellipsize="marquee"/>
+                    android:orientation="vertical">
 
                     <Spinner
-                        android:layout_weight="60"
-                        android:layout_margin="5dp"
                         android:id="@+id/personalDetailsSpinner"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="left"
-                        android:theme="@style/spinner_item"
                         android:backgroundTint="@color/navyBlue"
-                        android:entries="@array/spinnerPesonalDetails" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="100"
-                    android:layout_below="@+id/linear">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_weight="40"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/old_value"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:layout_marginEnd="5dp"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/showOldValueTextView"
-                        android:layout_weight="60"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:hint="@string/old_value"
-                        android:ellipsize="marquee"
-                        android:layout_marginStart="5dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="100"
-                    android:layout_below="@+id/linearLayout1">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_weight="40"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="ENTER NEW VALUE"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
+                        android:entries="@array/spinnerPersonalDetails"
+                        android:gravity="left"
+                        android:theme="@style/spinner_item"/>
 
                     <EditText
-                        android:layout_weight="60"
                         android:id="@+id/personalDetailsEditText"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
+                        android:backgroundTint="@color/navyBlue"
+                        android:layout_marginLeft="5dp"
                         android:inputType="text"
-                        android:backgroundTint="@color/navyBlue"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
+
 
                 <Button
                     android:id="@+id/btnSavePersonalDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/linearLayout2"
+                    android:layout_below="@id/linear"
                     android:layout_centerHorizontal="true"
                     android:enabled="false"
                     android:text="@string/save_personal_details" />
@@ -167,119 +105,56 @@
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:textSize="0sp"
                 android:layout_below="@id/layoutPersonalDetails"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:background="@color/gray"
+                android:textSize="0sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtEditPinDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divider"
+                android:layout_marginTop="10dp"
+                android:text="@string/edit_pin_details"
+                android:textColor="@color/navyBlue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <RelativeLayout
-                android:layout_marginTop="20dp"
                 android:id="@+id/layoutPinDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_below="@+id/divider">
+                android:layout_below="@+id/txtEditPinDetails"
+                android:visibility="gone">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtEditPinDetails"
+                <EditText
+                    android:id="@+id/editTxtNewPin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/edit_pin_details"
-                    android:textAlignment="center"
-                    android:textColor="@color/navyBlue"
-                    android:textSize="18sp"
+                    android:backgroundTint="@color/navyBlue"
+                    android:inputType="numberPassword"
+                    android:hint="ENTER NEW 4 DIGIT PIN"
+                    android:maxLength="4"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayout3"
+                <EditText
+                    android:id="@+id/editTxtNewRePin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="100"
-                    android:layout_below="@+id/txtEditPinDetails">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_weight="40"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/enter_old_pin"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        />
-
-                    <EditText
-                        android:layout_weight="60"
-                        android:id="@+id/editTxtOldPin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:inputType="numberPassword"
-                        android:backgroundTint="@color/navyBlue"
-                        android:maxLength="4"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="100"
-                    android:layout_below="@+id/linearLayout3">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_weight="40"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/enter_new_pin"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
-
-                    <EditText
-                        android:layout_weight="60"
-                        android:id="@+id/editTxtNewPin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:inputType="numberPassword"
-                        android:backgroundTint="@color/navyBlue"
-                        android:maxLength="4"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="100"
-                    android:layout_below="@+id/linearLayout4">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_weight="40"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/re_enter_new_pin"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
-
-                    <EditText
-                        android:layout_weight="60"
-                        android:id="@+id/editTxtNewRePin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:inputType="numberPassword"
-                        android:backgroundTint="@color/navyBlue"
-                        android:maxLength="4"/>
-                </LinearLayout>
+                    android:layout_below="@+id/editTxtNewPin"
+                    android:backgroundTint="@color/navyBlue"
+                    android:hint="RE-ENTER NEW 4 DIGIT PIN"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnSavePinDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/linearLayout5"
+                    android:layout_below="@id/editTxtNewRePin"
                     android:layout_centerHorizontal="true"
                     android:enabled="false"
                     android:text="@string/save_pin_details" />
@@ -290,96 +165,97 @@
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:textSize="0sp"
                 android:layout_below="@id/layoutPinDetails"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:background="@color/gray"
+                android:textSize="0sp" />
 
-                    <RelativeLayout
-                        android:id="@+id/layoutChangeEmergencyDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/divider2">
-
-                        <LinearLayout
-                            android:id="@+id/linearLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/txtChangeEmergencyDetails"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/edit_emergency_details"
-                                android:textAlignment="center"
-                                android:textColor="@color/navyBlue"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:id="@+id/emergencyDetailsLayout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="100">
-
-                                <EditText
-                                    android:layout_weight="60"
-                                    android:id="@+id/emergencyPhone"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:hint="@string/emergencyPhoneHint"
-                                    android:maxLength="10"
-                                    android:inputType="number"
-                                    android:textStyle="bold"
-                                    android:layout_gravity="center"
-                                    android:layout_marginEnd="5dp"/>
-
-                                <Button
-                                    android:layout_gravity="center"
-                                    android:layout_weight="40"
-                                    android:id="@+id/getContact"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/contacts"
-                                    android:layout_centerHorizontal="true"/>
-
-
-                            </LinearLayout>
-
-
-                            <EditText
-
-                                android:id="@+id/emergencyEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/emergencyEmailHint"
-                                android:inputType="textEmailAddress"
-                                android:textStyle="bold"/>
-
-                            <Button
-                                android:id="@+id/btnChangeEmergencyContactDetails"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/linearLayout2"
-                                android:layout_centerHorizontal="true"
-                                android:enabled="false"
-                                android:text="@string/save_emergency_contact_details" />
-                        </LinearLayout>
-
-
-
-                    </RelativeLayout>
-
-            <TextView
-                android:id="@+id/divider3"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtChangeEmergencyDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:textSize="0sp"
-                android:layout_below="@id/layoutChangeEmergencyDetails"
-                android:layout_marginTop="10dp"/>
+                android:layout_below="@id/divider2"
+                android:layout_marginTop="10dp"
+                android:text="@string/edit_emergency_details"
+                android:textColor="@color/navyBlue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/layoutChangeEmergencyDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtChangeEmergencyDetails"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/emergencyDetailsLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <EditText
+                            android:id="@+id/emergencyPhone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="60"
+                            android:hint="@string/emergencyPhoneHint"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/getContact"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_weight="40"
+                            android:text="@string/contacts" />
+
+
+                    </LinearLayout>
+
+
+                    <EditText
+
+                        android:id="@+id/emergencyEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/emergencyEmailHint"
+                        android:inputType="textEmailAddress"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnChangeEmergencyContactDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/linearLayout2"
+                        android:layout_centerHorizontal="true"
+                        android:enabled="false"
+                        android:text="@string/save_emergency_contact_details" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+<!--            <TextView-->
+<!--                android:id="@+id/divider3"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/layoutChangeEmergencyDetails"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:background="@color/gray"-->
+<!--                android:textSize="0sp" />-->
 
         </RelativeLayout>
 

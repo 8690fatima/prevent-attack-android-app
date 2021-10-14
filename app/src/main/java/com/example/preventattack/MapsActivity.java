@@ -131,7 +131,6 @@ public class MapsActivity extends AppCompatActivity {
                 smsManager.sendTextMessage(phoneNumber.trim(), null, message, null, null);
                 logView.append("> SMS sent successfully\n");
                 if(new DatabaseHelper(getApplicationContext()).insertLocation(location.getLongitude(), location.getLatitude())){
-                    Toast.makeText(getApplicationContext(), "Location details saved",Toast.LENGTH_SHORT).show();
                 }
                 exit(0);
 

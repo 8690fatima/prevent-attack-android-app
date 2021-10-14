@@ -63,6 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/description"
         android:layout_marginBottom="50dp"
-        android:dividerHeight="10dp" />
+        android:dividerHeight="5dp" />
 
 </RelativeLayout>

@@ -22,17 +22,17 @@
             android:src="@drawable/ic_lock"/>
 
         <TextView
-            android:textSize="18sp"
             android:id="@+id/txtLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/lockImage"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
             android:text="@string/txtLogin"
             android:textAlignment="center"
             android:textColor="@color/navyBlue"
-            android:textStyle="bold"
-            android:layout_below="@+id/lockImage"
-            android:layout_marginBottom="50dp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:textSize="18sp"
@@ -110,6 +110,18 @@
                 android:backgroundTint="@color/navyBlue"
                 android:padding="15dp"/>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/forgotPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/passwordLayout"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            android:text="@string/txtForgotPassword"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 

@@ -43,7 +43,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         fusedLocationProviderClient = null;
-        Toast.makeText(getApplicationContext(),"HOME PAGE",Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -78,8 +77,6 @@ public class HomeActivity extends AppCompatActivity {
                         Intent intent = new Intent();
                         intent.setClass(getApplicationContext(), Login.class);
                         loginActivityResultLauncher.launch(intent);
-                    } else if (isActivated & !isWaitPeriod) {
-                        Toast.makeText(getApplicationContext(), "LOCATION SENT SUCCESSFULLY", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -130,13 +127,6 @@ public class HomeActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//                        success();
-//                    }
-//                    else if(result.getResultCode() == Activity.RESULT_CANCELED){
-//                        Toast.makeText(getApplicationContext(),"ERROR!",Toast.LENGTH_LONG).show();
-//                        terminate();
-//                    }
                     terminate();
                 }
             });
@@ -195,19 +185,16 @@ public class HomeActivity extends AppCompatActivity {
 
         switch(item.getItemId()){
             case R.id.settings_menu:
-                Toast.makeText(this,"SETTINGS PAGE",Toast.LENGTH_SHORT).show();
                 Intent intent_settings = new Intent();
                 intent_settings.setClass(getApplicationContext(),Settings.class);
                 startActivity(intent_settings);
                 return true;
             case R.id.account_menu:
-                Toast.makeText(this,"ACCOUNT PAGE",Toast.LENGTH_SHORT).show();
                 Intent intent_account = new Intent();
                 intent_account.setClass(getApplicationContext(),AccountActivity.class);
                 startActivity(intent_account);
                 return true;
             case R.id.panic_records:
-                Toast.makeText(this, "PANIC RECORDS", Toast.LENGTH_SHORT).show();
                 Intent intent_records = new Intent();
                 intent_records.setClass(getApplicationContext(), PanicRecords.class);
                 startActivity(intent_records);
