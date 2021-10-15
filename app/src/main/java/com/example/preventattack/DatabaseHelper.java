@@ -73,7 +73,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()){
             HashMap<String,String> record = new HashMap<>();
             record.put("id",cursor.getString(cursor.getColumnIndex(COLUMN_ID)));
-            record.put("date-time",cursor.getString(cursor.getColumnIndex(COLUMN_DATE_TIME)));
+            record.put("date-time",cursor.getString(cursor.getColumnIndex(COLUMN_DATE_TIME)).toUpperCase());
             record.put("longitude",cursor.getString(cursor.getColumnIndex(COLUMN_LONGITUDE)));
             record.put("latitude",cursor.getString(cursor.getColumnIndex(COLUMN_LATITUDE)));
             records.add(record);
@@ -100,7 +100,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // set the format to sql date time
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a");
         Date date = new Date();
         ContentValues initialValues = new ContentValues();
         initialValues.put(COLUMN_DATE_TIME, dateFormat.format(date));

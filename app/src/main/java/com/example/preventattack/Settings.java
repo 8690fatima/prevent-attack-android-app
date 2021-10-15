@@ -163,7 +163,6 @@ public class Settings extends AppCompatActivity {
                         detailsEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                         break;
                 }
-                //detailsEditText.requestFocus();
             }
 
             @Override

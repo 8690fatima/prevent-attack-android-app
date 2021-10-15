@@ -21,7 +21,7 @@
             android:exported="true" />
         <activity android:name=".AccountActivity" />
         <activity android:name=".MapsActivity" />
-        <activity android:name=".Settings" />
+        <activity android:name=".Settings"/>
         <activity android:name=".Registration" />
         <activity android:name=".Login" />
         <activity android:name=".HomeActivity" />

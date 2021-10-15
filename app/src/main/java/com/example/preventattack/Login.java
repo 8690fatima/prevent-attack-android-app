@@ -1,6 +1,5 @@
 package com.example.preventattack;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,14 +9,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Login extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class Login extends AppCompatActivity {
 
     private EditText loginDigit1,loginDigit2,loginDigit3,loginDigit4;
     private TextView forgotPassword;
     private int[] loginPin = new int[4];
     private int loginPinCount;
     private static DatabaseHelper helper;
-    private String securityAns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +40,10 @@ public class Login extends Activity {
         loginDigit2 = findViewById(R.id.passDigit2);
         loginDigit3 = findViewById(R.id.passDigit3);
         loginDigit4 = findViewById(R.id.passDigit4);
-
         forgotPassword = findViewById(R.id.forgotPassword);
 
         loginDigit1.requestFocus();
+
     }
 
     private void loginMethod(){
