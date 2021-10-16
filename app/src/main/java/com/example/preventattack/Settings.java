@@ -516,7 +516,7 @@ public class Settings extends AppCompatActivity {
 
                         if(cursor2.getCount()!=0){
                             emergencyPhone.setHint(R.string.emergencyPhoneHint);
-                            emergencyEmailID.setText(R.string.emergencyEmailHint);
+                            emergencyEmailID.setHint(R.string.emergencyEmailHint);
                         }
 
                         while (cursor2 != null && cursor2.moveToNext()) {
