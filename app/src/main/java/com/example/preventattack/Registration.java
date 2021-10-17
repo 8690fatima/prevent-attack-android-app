@@ -312,7 +312,7 @@ public class Registration extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().matches("[a-z]+")) {
+                if (s.toString().matches("[a-zA-Z]+")) {
                     validSecurityAnswer = true;
                     checkRegistrationDetails();
                     securityAnswer.setTextColor(getResources().getColor(R.color.darkGreen));
