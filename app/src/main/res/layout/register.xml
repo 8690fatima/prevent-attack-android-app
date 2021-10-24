@@ -14,198 +14,191 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_gravity="center"
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout2"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayout0"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
+                android:layout_alignParentTop="true"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/linearLayout0"
+                <ImageView
+                    android:id="@+id/accountIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_register" />
+
+                <TextView
+                    android:id="@+id/registerHint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_alignParentTop="true">
+                    android:layout_gravity="center"
+                    android:text="@string/registerHint"
+                    android:textAlignment="center"
+                    android:textColor="@color/navyBlue"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/accountIcon"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_register" />
-
-                    <TextView
-                        android:textSize="18sp"
-                        android:id="@+id/registerHint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/registerHint"
-                        android:textAlignment="center"
-                        android:textColor="@color/navyBlue"
-                        android:textStyle="bold"/>
-
-                </LinearLayout>
+            </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/linearLayout1"
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/linearLayout0"
+                android:textStyle="bold">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:id="@+id/loginHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txtPersonalDetails"
+                    android:textColor="@color/navyBlue"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"/>
+
+                <EditText
+                    android:id="@+id/firstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/linearLayout0"
-                    android:textStyle="bold">
+                    android:hint="@string/firstNameHint"
+                    android:inputType="textPersonName"
+                    android:textStyle="bold"/>
 
-                    <TextView
-                        android:textSize="18sp"
-                        android:id="@+id/loginHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txtPersonalDetails"
-                        android:textColor="@color/navyBlue"
-                        android:textStyle="bold"
-                        android:layout_marginTop="15dp"/>
-
-                    <EditText
-                        android:id="@+id/firstName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/firstNameHint"
-                        android:inputType="textPersonName"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:id="@+id/lastName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/lastNameHint"
-                        android:inputType="textPersonName"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:id="@+id/email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/emailHint"
-                        android:inputType="textEmailAddress"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:id="@+id/pin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/pinHint"
-                        android:inputType="numberPassword"
-                        android:maxLength="4"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:id="@+id/rePin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/rePinHint"
-                        android:inputType="numberPassword"
-                        android:maxLength="4"
-                        android:textStyle="bold"/>
-
-                    <Spinner
-                        android:id="@+id/spinnerSecurityQuestion"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="left"
-                        android:theme="@style/spinner_item"
-                        android:backgroundTint="@color/navyBlue"
-                        android:entries="@array/securityQuestions" />
-
-                    <EditText
-                        android:id="@+id/securityAnswer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:hint="@string/securityAnswerHint"
-                        android:inputType="textPersonName"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
+                <EditText
+                    android:id="@+id/lastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/linearLayout1">
+                    android:hint="@string/lastNameHint"
+                    android:inputType="textPersonName"
+                    android:textStyle="bold"/>
 
-                    <TextView
-                        android:textSize="18sp"
-                        android:id="@+id/txtEmergencyContactDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txtEmergencyContactDetails"
-                        android:textColor="@color/navyBlue"
-                        android:textStyle="bold"
-                        android:layout_marginTop="15dp"/>
-
-                    <LinearLayout
-                        android:id="@+id/emergencyDetailsLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="100">
-
-                        <EditText
-                            android:layout_weight="60"
-                            android:id="@+id/emergencyPhone"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/emergencyPhoneHint"
-                            android:maxLength="10"
-                            android:inputType="number"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="5dp"/>
-
-                        <Button
-                            android:layout_gravity="center"
-                            android:layout_weight="40"
-                            android:id="@+id/getContact"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/contacts"
-                            android:layout_centerHorizontal="true"/>
-
-
-                    </LinearLayout>
-
-
-                    <EditText
-
-                        android:id="@+id/emergencyEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/emergencyEmailHint"
-                        android:inputType="textEmailAddress"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnRegister"
+                <EditText
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/linearLayout2"
+                    android:hint="@string/emailHint"
+                    android:inputType="textEmailAddress"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/pinHint"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/rePin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/rePinHint"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:textStyle="bold"/>
+
+                <Spinner
+                    android:id="@+id/spinnerSecurityQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
                     android:layout_centerHorizontal="true"
-                    android:enabled="false"
-                    android:text="@string/txtRegister" />
+                    android:gravity="left"
+                    android:theme="@style/spinner_item"
+                    android:backgroundTint="@color/navyBlue"
+                    android:entries="@array/securityQuestions" />
 
-            </RelativeLayout>
+                <EditText
+                    android:id="@+id/securityAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:hint="@string/securityAnswerHint"
+                    android:inputType="textPersonName"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/linearLayout1">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:id="@+id/txtEmergencyContactDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txtEmergencyContactDetails"
+                    android:textColor="@color/navyBlue"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"/>
+
+                <LinearLayout
+                    android:id="@+id/emergencyDetailsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <EditText
+                        android:layout_weight="60"
+                        android:id="@+id/emergencyPhone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/emergencyPhoneHint"
+                        android:maxLength="10"
+                        android:inputType="number"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"/>
+
+                    <Button
+                        android:layout_gravity="center"
+                        android:layout_weight="40"
+                        android:id="@+id/getContact"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contacts"
+                        android:layout_centerHorizontal="true"/>
+
+
+                </LinearLayout>
+
+
+                <EditText
+
+                    android:id="@+id/emergencyEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/emergencyEmailHint"
+                    android:inputType="textEmailAddress"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayout2"
+                android:layout_centerHorizontal="true"
+                android:enabled="false"
+                android:text="@string/txtRegister" />
 
         </RelativeLayout>
+
 
     </ScrollView>
 
