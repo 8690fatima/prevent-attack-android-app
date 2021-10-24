@@ -252,12 +252,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         else if(detail == "email_address"){
             contentValues.put(COLUMN_EMAIL,newValue);
         }
-        else if(detail == "emergency_email"){
-            contentValues.put(COLUMN_EMERGENCY_EMAIL,newValue);
-        }
-        else if(detail == "emergency_phone"){
-            contentValues.put(COLUMN_EMERGENCY_PHONE,newValue);
-        }
 
         isupdateSuccess = db.update(USER_INFO_TABLE,contentValues,COLUMN_USER_ID+"=1",null);
         if(isupdateSuccess==1)

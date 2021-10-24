@@ -140,9 +140,9 @@ public class MapsActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     private void getLocationUsingNetwork() {
 
-        final boolean isNetworkProviderEnabled;
+        boolean isNetworkProviderEnabled;
 
-        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         logView.append("Checking Network Location Access...\n");
 
@@ -191,7 +191,7 @@ public class MapsActivity extends AppCompatActivity {
 
         boolean isGpsProviderEnabled;
 
-        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         logView.append("Checking GPS Location Access...\n");
 
