@@ -6,7 +6,6 @@
     android:padding="10dp">
 
     <ScrollView
-        android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -238,15 +237,6 @@
 
 
             </RelativeLayout>
-
-<!--            <TextView-->
-<!--                android:id="@+id/divider3"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@id/layoutChangeEmergencyDetails"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:background="@color/gray"-->
-<!--                android:textSize="0sp" />-->
 
         </RelativeLayout>
 
