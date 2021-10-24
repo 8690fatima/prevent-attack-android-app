@@ -259,13 +259,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public boolean changePassword(String newPin){
+    public boolean changePassword(String newHashedPin){
         ContentValues contentValues = new ContentValues();
         SQLiteDatabase db = this.getWritableDatabase();
         long isupdateSuccess;
         boolean result = false;
 
-        contentValues.put(COLUMN_PIN,MD5.getHashedPassword(newPin));
+        contentValues.put(COLUMN_PIN,newHashedPin);
 
         isupdateSuccess = db.update(USER_INFO_TABLE,contentValues,COLUMN_USER_ID+"=1",null);
         if(isupdateSuccess==1)

@@ -342,7 +342,7 @@ public class Settings extends AppCompatActivity {
                         String response = ((EditText)view.findViewById(R.id.securityAnswer)).getText().toString().toLowerCase();
 
                         if(securityDetails.get("securityAns").equals(MD5.getHashedPassword(response))){
-                            if(helper.changePassword(newPinEditText.getText().toString())){
+                            if(helper.changePassword(MD5.getHashedPassword(newPinEditText.getText().toString()))){
                                 Toast.makeText(Settings.this, "✅ UPDATE SUCCESSFUL", Toast.LENGTH_SHORT).show();
 
                                 if(intent.getBooleanExtra("forgotPassword",false)){
