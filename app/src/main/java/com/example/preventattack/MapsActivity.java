@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,13 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 public class MapsActivity extends AppCompatActivity {
     private TextView logView, errorTxt;
@@ -53,7 +48,7 @@ public class MapsActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        logView.append("Checking SMS Permission...\n");
+        logView.append("Checking Location & SMS Permission...\n");
         if (ActivityCompat.checkSelfPermission(MapsActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(MapsActivity.this,
@@ -61,22 +56,21 @@ public class MapsActivity extends AppCompatActivity {
                 && ActivityCompat.checkSelfPermission(MapsActivity.this,
                 Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
             logView.append("> GRANTED ✔️\n");
-            getCurrentLocation();
+            //getLocationUsingNetwork(); //Ideally we need to call this function only but
+                                        //an emulator does not support network hence we won't
+                                        //get the location. To get the location co-ordinates on an
+                                        //emulator it is mandatory to use GPS
+            getLocationUsingGPS();      //Hence directly this function call needs to be made.
         } else {
             logView.append("> NOT GRANTED ❌\n");
             exit(-1);
         }
-
-        if(HomeActivity.fusedLocationProviderClient == null)
-            HomeActivity.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(HomeActivity.fusedLocationProviderClient == null) {
-            HomeActivity.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        }
+
     }
 
     void exit(int exitCode) {
@@ -89,13 +83,10 @@ public class MapsActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
                 break;
             case -1:
-                //logView.setText(logView.getText().toString() + "ERROR...\n");
                 errorTxt.setVisibility(View.VISIBLE);
                 logView.setText(logView.getText().toString() + "Could not send location! Please try again!\n");
                 logView.setText(logView.getText().toString() + "Terminating...\n");
                 logView.setText(logView.getText().toString() + "END\n");
-
-                //logView.setTextColor(getResources().getColor(R.color.cherryRed));
                 imageView.setImageResource(R.mipmap.sms_unsuccess);
                 setResult(RESULT_CANCELED);
                 break;
@@ -131,6 +122,7 @@ public class MapsActivity extends AppCompatActivity {
                 smsManager.sendTextMessage(phoneNumber.trim(), null, message, null, null);
                 logView.append("> SMS sent successfully\n");
                 if(new DatabaseHelper(getApplicationContext()).insertLocation(location.getLongitude(), location.getLatitude())){
+                    Log.i("MapsActivity","Location details added to the database.");
                 }
                 exit(0);
 
@@ -146,67 +138,104 @@ public class MapsActivity extends AppCompatActivity {
     }
 
     @SuppressLint("MissingPermission")
-    private void getCurrentLocation() {
+    private void getLocationUsingNetwork() {
 
-        LocationManager locationManager = (LocationManager) getSystemService(
-                Context.LOCATION_SERVICE);
+        final boolean isNetworkProviderEnabled;
 
-        logView.append("Checking Location Access Permissions...\n");
+        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+        logView.append("Checking Network Location Access...\n");
 
-            logView.append("> GRANTED  ✔️\n");
+        isNetworkProviderEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if(HomeActivity.fusedLocationProviderClient!=null) {
-                HomeActivity.fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
+        if(!isNetworkProviderEnabled){ //if network provider is not enabled
+            logView.append("> INACCESSIBLE ❌\n");
+            getLocationUsingGPS();
+            return;
+        }else{ //network provider is enabled
+            logView.append("> ENABLED  ✔️\n");
+            locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, new LocationListener() {
 
-                        logView.append("Finding location co-ordinates...\n");
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
 
-                        final Location location = task.getResult();
-                        if (location != null) {
-                            logView.append("Co-ordinates:-\n" + "Latitude: " + location.getLatitude() + "\n" + "Longitude: " + location.getLongitude() + "\n");
-                            sendSMS(location);
-                        } else {
-                            LocationRequest locationRequest = LocationRequest.create()
-                                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                                    .setInterval(10000)
-                                    .setFastestInterval(1000)
-                                    .setNumUpdates(1);
+                    logView.append("Finding location co-ordinates through network...\n");
 
-                            LocationCallback locationCallback = new LocationCallback() {
-                                @Override
-                                public void onLocationResult(@NonNull LocationResult locationResult) {
-                                    Location location1 = locationResult.getLastLocation();
+                    if(location!=null){
 
-                                    while(location1 == null){
-                                        location1 = locationResult.getLastLocation();
-                                    }
-
-                                    if(location1!=null) {
-                                        logView.append("Co-ordinates:-\n" + "Latitude: " + location1.getLatitude() + "\n" + "Longitude: " + location1.getLongitude() + "\n");
-                                        sendSMS(location1);
-                                    }else{
-                                        logView.append("ERROR Could not find Co-ordinates!");
-                                    }
-
-                                }
-                            };
-
-                            HomeActivity.fusedLocationProviderClient.requestLocationUpdates(locationRequest,
-                                    locationCallback, Looper.myLooper());
-                        }
+                        logView.append("Co-ordinates Found:-\n" + "Latitude: " + location.getLatitude() + "\n" + "Longitude: " + location.getLongitude() + "\n");
+                        sendSMS(location);
                     }
-                });
-            }else{
-                HomeActivity.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-            }
-        }else{
-            logView.append("> NOT GRANTED  ❌\n");
+                    else{
+                        logView.append("Could not find location!"+"\n");
+                        getLocationUsingGPS();
+                    }
+                }
+
+                @Override
+                public void onProviderEnabled(@NonNull String provider) { }
+
+                @Override
+                public void onProviderDisabled(@NonNull String provider) { }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) { }
+
+            }, Looper.myLooper());
+        }
+
+    }
+
+    @SuppressLint("MissingPermission")
+    void getLocationUsingGPS(){
+
+        boolean isGpsProviderEnabled;
+
+        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        logView.append("Checking GPS Location Access...\n");
+
+        isGpsProviderEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if(!isGpsProviderEnabled)
+        {  //GPS Provider is not enabled
+            logView.append("> INACCESSIBLE ❌\n");
             exit(-1);
         }
+        else
+        {  //GPS is enabled
+            logView.append("> ENABLED  ✔️\n");
+
+            locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, new LocationListener() {
+
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
+
+                    logView.append("Finding location co-ordinates through GPS...\n");
+
+                    if(location!=null){
+
+                        logView.append("Co-ordinates Found:-\n" + "Latitude: " + location.getLatitude() + "\n" + "Longitude: " + location.getLongitude() + "\n");
+                        sendSMS(location);
+                    }
+                    else{
+                        logView.append("Could not find location!"+"\n");
+                        exit(-1);
+                    }
+                }
+
+                @Override
+                public void onProviderEnabled(@NonNull String provider) { }
+
+                @Override
+                public void onProviderDisabled(@NonNull String provider) { }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) { }
+
+            }, Looper.myLooper());
+        }
+
     }
 
     @Override

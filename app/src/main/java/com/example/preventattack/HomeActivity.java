@@ -24,12 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-
 public class HomeActivity extends AppCompatActivity {
 
-    public static FusedLocationProviderClient fusedLocationProviderClient;
     private ImageView btnPanicImageView;
     private static boolean isActivated;
     private static boolean isWaitPeriod;
@@ -42,7 +38,6 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        fusedLocationProviderClient = null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -86,22 +81,25 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        if(locationManager1!=null){
+        boolean arePermissionsGranted;
 
-            if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
+        //Checking Location and SMS permissions
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)
+        {
+            arePermissionsGranted = true;
+            errorTextView.setVisibility(View.INVISIBLE);
+        }else{
+            arePermissionsGranted = false;
+            errorTextView.setVisibility(View.VISIBLE);
+        }
+
+        if(locationManager1!=null && arePermissionsGranted){
+            if(locationManager1.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                 errorTextView.setVisibility(View.INVISIBLE);
-                if(locationManager1!=null)
-                    if(locationManager1.isProviderEnabled(LocationManager.NETWORK_PROVIDER) || locationManager1.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-                        errorTextView.setVisibility(View.INVISIBLE);
-                    }else{
-                        errorTextView.setVisibility(View.VISIBLE);
-                    }
-            }
-            else{
+            }else{
                 errorTextView.setVisibility(View.VISIBLE);
             }
         }
